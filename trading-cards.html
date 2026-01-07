@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Krish Shah | Card Collection</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #1a2332;
+      --bg-secondary: #242f42;
+      --card-face: #f5f2eb;
+      --card-face-alt: #ebe7dc;
+      --accent-gold: #c9a227;
+      --accent-cardinal: #8b3a3a;
+      --text-dark: #1a1a1a;
+      --text-light: #f5f2eb;
+      --text-muted: #6b7280;
+      --card-shadow: rgba(0, 0, 0, 0.4);
+      --card-radius: 12px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-light);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-image: 
+        radial-gradient(circle at 25% 25%, var(--bg-secondary) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, var(--bg-secondary) 1px, transparent 1px);
+      background-size: 50px 50px;
+      opacity: 0.5;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    h1, h2, h3 { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em; }
+    .type-art {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .type-main {
+      font-size: 5rem;
+      color: rgba(26, 35, 50, 0.15);
+      line-height: 1;
+    }
+
+    .type-sub {
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      color: rgba(139, 58, 58, 0.6);
+      letter-spacing: 0.3em;
+    }
+
+    .header {
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--accent-gold);
+      letter-spacing: 0.1em;
+    }
+
+    .nav { display: flex; gap: 2rem; }
+
+    .nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: color 0.3s ease;
+    }
+    .experience-type-art {
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.25em;
+    }
+
+    .experience-type-art .type-main {
+      font-size: 4rem;
+      color: rgba(26, 35, 50, 0.18);
+    }
+
+    .experience-type-art .type-sub {
+      font-size: 0.9rem;
+      color: rgba(139, 58, 58, 0.6);
+    }
+
+
+    .nav a:hover { color: var(--accent-gold); }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--accent-gold);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: opacity 0.2s;
+    }
+
+    .back-link:hover { opacity: 0.8; }
+    .back-link svg { width: 16px; height: 16px; }
+
+    .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+
+    .section-title {
+      font-size: 2.5rem;
+      color: var(--accent-gold);
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--accent-cardinal);
+      margin: 0.5rem auto 0;
+    }
+
+    /* Card flip mechanics */
+    .card-container { perspective: 1000px; }
+
+    .card {
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .card.flipped { transform: rotateY(180deg); }
+
+    .card-front, .card-back {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      backface-visibility: hidden;
+      border-radius: var(--card-radius);
+      overflow: hidden;
+    }
+
+    .card-front { background: var(--card-face); color: var(--text-dark); }
+
+    .card-back {
+      background: var(--card-face-alt);
+      color: var(--text-dark);
+      transform: rotateY(180deg);
+    }
+
+    .card-back-pattern {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      opacity: 0.05;
+      background-image: repeating-linear-gradient(45deg, var(--accent-gold) 0, var(--accent-gold) 1px, transparent 1px, transparent 10px),
+        repeating-linear-gradient(-45deg, var(--accent-cardinal) 0, var(--accent-cardinal) 1px, transparent 1px, transparent 10px);
+    }
+
+    /* Hero / Rookie Card */
+    .hero-section { display: flex; justify-content: center; padding: 4rem 0; }
+
+    .rookie-card-container { width: 380px; height: 540px; }
+
+    .rookie-card { width: 100%; height: 100%; box-shadow: 0 20px 60px var(--card-shadow); }
+
+    .rookie-card .card-front {
+      display: flex;
+      flex-direction: column;
+      border: 4px solid var(--accent-gold);
+    }
+
+    .rookie-card .card-header {
+      background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+      padding: 0.75rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .rookie-card .card-header .position {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.9rem;
+      color: var(--accent-gold);
+      letter-spacing: 0.1em;
+    }
+
+    .rookie-card .card-header .year {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      opacity: 0.8;
+    }
+
+    .rookie-card .card-image {
+      flex: 1;
+      background: linear-gradient(180deg, var(--card-face) 0%, var(--card-face-alt) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .rookie-card .card-image svg { width: 180px; height: 180px; padding: 2rem; }
+
+    .rookie-card .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .rookie-card .card-info {
+      padding: 1.25rem;
+      background: var(--card-face);
+      border-top: 3px solid var(--accent-gold);
+    }
+
+    .rookie-card .card-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--bg-primary);
+      line-height: 1;
+    }
+
+    .rookie-card .card-title {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .rookie-card .card-stats { display: flex; gap: 1.5rem; margin-top: 1rem; }
+
+    .rookie-card .stat { text-align: center; }
+
+    .rookie-card .stat-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--accent-cardinal);
+    }
+
+    .rookie-card .stat-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .rookie-card .card-back {
+      border: 4px solid var(--accent-gold);
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+    }
+
+    .rookie-card .card-back h3 {
+      font-size: 1.5rem;
+      color: var(--bg-primary);
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--accent-gold);
+      padding-bottom: 0.5rem;
+    }
+
+    .rookie-card .card-back p {
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .rookie-card .card-back .links {
+      margin-top: auto;
+      display: flex;
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .rookie-card .card-back .links a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--bg-primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 0.5rem 1rem;
+      background: var(--accent-gold);
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+
+    .rookie-card .card-back .links a:hover {
+      background: var(--accent-cardinal);
+      color: var(--text-light);
+    }
+
+    .flip-hint {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      opacity: 0.7;
+    }
+
+    /* Projects Section */
+    .projects-section { padding: 4rem 0; }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .project-card-container { height: 400px; }
+
+    .project-card { width: 100%; height: 100%; box-shadow: 0 10px 40px var(--card-shadow); }
+
+    .project-card .card-front {
+      border: 3px solid var(--accent-gold);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card .card-front .project-header {
+      background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+      padding: 0.5rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .project-card .card-front .project-type {
+      font-size: 0.75rem;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .project-card .card-front .project-rarity {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      background: var(--accent-cardinal);
+      color: var(--text-light);
+      border-radius: 4px;
+    }
+
+    .project-card .card-image {
+      flex: 1;
+      background: linear-gradient(180deg, var(--card-face) 0%, var(--card-face-alt) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .project-card .card-image svg { width: 360px; height: 120px; padding: 1.5rem; }
+
+    .project-card .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .project-card .card-info {
+      padding: 1rem;
+      border-top: 2px solid var(--accent-gold);
+    }
+
+    .project-card .project-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: var(--bg-primary);
+    }
+
+    .project-card .project-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .project-card .card-back {
+      border: 3px solid var(--accent-gold);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card .card-back h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      color: var(--bg-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .project-card .card-back p {
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .project-card .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .project-card .tech-tag {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      background: var(--bg-primary);
+      color: var(--text-light);
+      border-radius: 4px;
+    }
+
+    .project-card .metrics {
+      display: flex;
+      gap: 1rem;
+      margin-top: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .project-card .metric { text-align: center; }
+
+    .project-card .metric-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      color: var(--accent-cardinal);
+    }
+
+    .project-card .metric-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* Skills Section */
+    .skills-section { padding: 4rem 0; }
+
+    .skills-card-container { max-width: 700px; height: 450px; margin: 0 auto; }
+
+    .skills-card { width: 100%; height: 100%; box-shadow: 0 15px 50px var(--card-shadow); }
+
+    .skills-card .card-front {
+      border: 4px solid var(--accent-gold);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .skills-card .card-front h3 {
+      font-size: 1.8rem;
+      color: var(--bg-primary);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .skill-bars { display: flex; flex-direction: column; gap: 1rem; }
+
+    .skill-bar { display: flex; align-items: center; gap: 1rem; }
+
+    .skill-bar .skill-name { width: 120px; font-weight: 600; font-size: 0.9rem; color: var(--text-dark); }
+
+    .skill-bar .bar-container {
+      flex: 1;
+      height: 20px;
+      background: var(--card-face-alt);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--bg-secondary);
+    }
+
+    .skill-bar .bar-fill {
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        #16a34a,
+        #22c55e
+      );
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+
+    .skill-bar .skill-value {
+      width: 40px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      color: var(--accent-cardinal);
+    }
+
+    .skills-card .card-back {
+      border: 4px solid var(--accent-gold);
+      padding: 1.5rem;
+    }
+
+    .skills-card .card-back h3 {
+      font-size: 1.5rem;
+      color: var(--bg-primary);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .skill-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      background: var(--card-face);
+      border-radius: 8px;
+      border: 1px solid var(--accent-gold);
+    }
+
+    .skill-item svg { width: 32px; height: 32px; }
+
+    .skill-item span { font-size: 0.75rem; color: var(--text-dark); text-align: center; }
+
+    /* Experience Section */
+    .experience-section { padding: 4rem 0; }
+
+    .experience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .experience-card-container { height: 320px; }
+
+    .experience-card { width: 100%; height: 100%; box-shadow: 0 10px 40px var(--card-shadow); }
+
+    .experience-card .card-front {
+      border: 3px solid var(--accent-gold);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .experience-card .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .experience-card .exp-year {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--accent-cardinal);
+    }
+
+    .experience-card .exp-type {
+      font-size: 0.7rem;
+      padding: 0.25rem 0.5rem;
+      background: var(--accent-gold);
+      color: var(--bg-primary);
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .experience-card .exp-company {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      color: var(--bg-primary);
+    }
+
+    .experience-card .exp-role {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .experience-card .exp-icon {
+      margin-top: auto;
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .experience-card .exp-icon svg { width: 240px; height: 60px; opacity: 0.8; }
+
+    .experience-card .exp-icon img {
+      max-width: 80px;
+      max-height: 80px;
+      object-fit: contain;
+      opacity: 0.8;
+    }
+
+    .experience-card .card-back {
+      border: 3px solid var(--accent-gold);
+      padding: 1.25rem;
+    }
+
+    .experience-card .card-back h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      color: var(--bg-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .experience-card .card-back ul {
+      list-style: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    .experience-card .card-back li {
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--card-face-alt);
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .experience-card .card-back li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent-gold);
+    }
+
+    /* Contact Section */
+    .contact-section { padding: 4rem 0; }
+
+    .contact-card-container { max-width: 400px; height: 280px; margin: 0 auto; }
+
+    .contact-card { width: 100%; height: 100%; box-shadow: 0 15px 50px var(--card-shadow); }
+
+    .contact-card .card-front {
+      border: 4px solid var(--accent-gold);
+      background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-cardinal) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .contact-card .card-front .legendary-badge {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.9rem;
+      padding: 0.25rem 1rem;
+      background: rgba(255,255,255,0.2);
+      color: var(--text-light);
+      border-radius: 20px;
+      letter-spacing: 0.2em;
+      margin-bottom: 1rem;
+    }
+
+    .contact-card .card-front h3 { font-size: 2.5rem; color: var(--text-light); }
+
+    .contact-card .card-front p { color: rgba(255,255,255,0.8); margin-top: 0.5rem; }
+
+    .contact-card .card-back {
+      border: 4px solid var(--accent-gold);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .contact-card .card-back a {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: var(--text-dark);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+      background: var(--card-face);
+      border: 2px solid var(--accent-gold);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-card .card-back a:hover { background: var(--accent-gold); }
+
+    .contact-card .card-back a svg { width: 24px; height: 24px; }
+
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav { gap: 1rem; }
+      .rookie-card-container { width: 320px; height: 480px; }
+      .skills-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a href="index.html" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      Switch Profile
+    </a>
+    <nav class="nav">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="container" id="content">
+    <p style="color: var(--accent-gold); text-align: center; padding: 4rem;">Loading collection...</p>
+  </main>
+
+  <script src="data/content.js"></script>
+  <script>
+    // Helper function to render card visual (image, custom SVG, or default SVG)
+    function renderCardVisual(image, customSvg, defaultSvg, typeArt) {
+      if (image) return `<img src="${image}" alt="Card image">`;
+      if (customSvg) return customSvg;
+      if (typeArt) return renderTypeArt(typeArt);
+      return defaultSvg;
+    }
+
+    function renderTypeArt(typeArt) {
+      if (!typeArt) return null;
+
+      return `
+        <div class="type-art">
+          <span class="type-main">${typeArt.text}</span>
+          ${typeArt.subtext ? `<span class="type-sub">${typeArt.subtext}</span>` : ''}
+        </div>
+      `;
+    }
+
+
+    function render() {
+      if (typeof DATA === 'undefined') {
+        document.getElementById('content').innerHTML = '<p style="color: #cc0000; text-align: center;">Error: Could not load content.js</p>';
+        return;
+      }
+
+      const d = DATA;
+      const container = document.getElementById('content');
+
+      // Default SVGs for cards
+      const defaultRookieSvg = `<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="70" r="40" fill="#1a2332"/>
+        <path d="M40 180 C40 130 160 130 160 180" fill="#1a2332"/>
+        <rect x="60" y="100" width="80" height="60" rx="5" fill="#c9a227"/>
+        <rect x="70" y="110" width="25" height="15" rx="2" fill="#1a2332"/>
+        <rect x="100" y="110" width="30" height="8" rx="2" fill="#8b3a3a"/>
+        <rect x="100" y="122" width="20" height="8" rx="2" fill="#8b3a3a"/>
+        <circle cx="85" cy="60" r="5" fill="#c9a227"/>
+        <circle cx="115" cy="60" r="5" fill="#c9a227"/>
+        <path d="M90 78 Q100 85 110 78" stroke="#c9a227" stroke-width="3" fill="none"/>
+      </svg>`;
+
+      // Default project icons
+      const defaultProjectSvgs = {
+        'rag-code-gen': `<svg width="96" height="96" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .stroke {
+      fill: none;
+      stroke: #111827;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  </style>
+
+  <!-- Code brackets -->
+  <path d="M28 24 L20 48 L28 72" class="stroke"/>
+  <path d="M68 24 L76 48 L68 72" class="stroke"/>
+
+  <!-- Vector DB stack -->
+  <line x1="38" y1="36" x2="58" y2="36" class="stroke"/>
+  <line x1="38" y1="48" x2="58" y2="48" class="stroke"/>
+  <line x1="38" y1="60" x2="58" y2="60" class="stroke"/>
+
+  <!-- AI spark -->
+  <path d="M48 18 L48 10" class="stroke"/>
+  <path d="M48 78 L48 86" class="stroke"/>
+  <path d="M18 48 L10 48" class="stroke"/>
+  <path d="M78 48 L86 48" class="stroke"/>
+</svg>
+`,
+        'trashure-cove': `<svg viewBox="0 0 120 120" fill="none"><circle cx="60" cy="50" r="30" stroke="#1a2332" stroke-width="3" fill="none"/><path d="M45 45 L55 55 L75 35" stroke="#c9a227" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M35 85 L60 70 L85 85 L60 100 Z" fill="#8b3a3a"/><circle cx="60" cy="50" r="8" fill="#1a2332"/></svg>`,
+        'qgo': `<svg viewBox="0 0 120 120" fill="none"><rect x="30" y="25" width="60" height="70" rx="8" stroke="#1a2332" stroke-width="3" fill="none"/><circle cx="60" cy="50" r="15" fill="#c9a227"/><path d="M55 50 L60 55 L70 45" stroke="#f5f2eb" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="40" y="72" width="40" height="8" rx="2" fill="#8b3a3a"/><rect x="45" y="82" width="30" height="6" rx="2" fill="#1a2332" opacity="0.3"/></svg>`,
+        'default': `<svg viewBox="0 0 120 120" fill="none"><rect x="20" y="20" width="80" height="80" rx="8" stroke="#1a2332" stroke-width="3" fill="none"/><path d="M40 60 L55 75 L80 50" stroke="#c9a227" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`
+      };
+
+      // Default experience icons
+      const defaultExpSvgs = {
+        'makerspace': `<svg width="760" height="140" viewBox="0 0 760 140" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .usc {
+      font-family: "Times New Roman", Georgia, serif;
+      font-weight: 700;
+      font-size: 72px;
+      fill: #9D2235;
+    }
+    .viterbi {
+      font-family: "Times New Roman", Georgia, serif;
+      font-weight: 700;
+      font-size: 72px;
+      fill: #000000;
+    }
+    .subtitle {
+      font-family: "Times New Roman", Georgia, serif;
+      font-style: italic;
+      font-size: 36px;
+      fill: #9D2235;
+    }
+  </style>
+
+  <!-- Main title -->
+  <text x="20" y="80">
+    <tspan class="usc">USC</tspan>
+    <tspan dx="10" class="viterbi">Viterbi</tspan>
+  </text>
+
+  <!-- Subtitle -->
+  <text x="250" y="120" class="subtitle">
+    Baum Family Maker Space
+  </text>
+</svg>
+`,
+        'whiteklay': `<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#9B1FE8"/>
+      <stop offset="100%" stop-color="#2D4BFF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Circle -->
+  <circle cx="128" cy="128" r="120" fill="url(#grad)"/>
+
+  <!-- W mark (tight, tall, uniform weight) -->
+  <path
+    fill="#FFFFFF"
+    d="
+      M 58 44
+      V 186
+      C 58 186, 96 164, 128 164
+      C 160 164, 198 186, 198 186
+      V 44
+      H 176
+      V 162
+      C 176 162, 152 152, 128 152
+      C 104 152, 80 162, 80 162
+      V 44
+      Z
+    "
+  />
+</svg>
+`,
+        'tridenthacks': `<svg viewBox="0 0 80 80" fill="#1a2332"><path d="M40 10L15 70h50L40 10z"/><circle cx="40" cy="45" r="8" fill="#8b3a3a"/></svg>`,
+        'viterbi-education': `<svg viewBox="0 0 80 80" fill="#1a2332"><path d="M40 15L10 30v5l30 15 30-15v-5L40 15z"/><path d="M20 37v18l20 10 20-10V37" fill="none" stroke="#1a2332" stroke-width="3"/></svg>`,
+        'scholastic': `<svg xmlns="http://www.w3.org/2000/svg" height="800" width="1200" viewBox="-45 -9.00125 390 54.0075"><path fill="#e6000d" d="M0 0h300v36.005H0z"/><path d="M22.166 12.717l-.18 13.234c0 .389-.245.335-.565.06-.419-.359-2.212-2.182-4.005-2.721-1.808-.539-1.997-.503-3.854-.509-1.789-.005-3.375-.118-3.585-.208-.208-.089-.507-.118-.448-.837l1.853-13.023c.088-.572-.059-.869.896-.632.954.238 3.495.206 3.972.238.778.064 2.361.451 3.467 1.408 1.105.955 2.449 2.151 2.449 2.99m.688 0l-.061 12.486c0 .595.299.716.658.238.442-.592 1.026-1.081 1.704-1.402 2.39-1.137 5.675-1.376 6.092-1.406.42-.029 2.57-.208 2.869-.299.724-.217.918-.012.776-1.464L33.22 8.176c-.06-.57-.181-.541-.541-.453-.355.092-.257.094-1.942.391-.802.143-1.904.027-3.193.421-1.25.376-2.226 1.049-3.319 2.029-.41.366-1.312 1.076-1.371 2.153m35.852-4.271c.32-.138.488-.247.523.159.048.6.27 3.389.289 3.643.017.274-.074.3-.255.126-.431-.415-1.892-1.976-4.091-2.573-1.617-.442-2.961-.345-3.916-.103-1.15.297-1.828.88-2.228 1.445-.624.881-.483 2.017.158 2.681.711.734 2.143.981 3.513 1.188 1.292.197 3.754.523 4.978.965 1.053.381 2.01 1.158 2.594 2.006.808 1.177.771 3.245-.136 4.484-.997 1.361-2.249 2.114-3.692 2.504-2.042.554-4.237.437-6.241-.122-1.762-.488-3.207-.845-4.331-.216-.231.132-.296.103-.316-.2-.021-.321-.222-3.486-.232-4.068-.003-.2.129-.151.202-.068.617.689 2.548 2.068 4.677 2.768 1.802.59 3.364.783 5.433.219.957-.262 1.7-1.013 1.944-1.443.374-.654.366-1.724-.158-2.325-.351-.399-.842-1.017-4.895-1.591-4.235-.597-5.408-1.637-6.216-2.859-.991-1.512-.842-3.23-.109-4.472.784-1.321 1.956-1.958 2.972-2.362 1.334-.525 3.364-.705 5.556-.322 2.179.381 3.004.959 3.977.536m27.536.931c-.037-.243-.096-.275-.336-.404-.404-.22-1.922-.721-2.766-.883-1.962-.367-4.111-.416-6.167.177-1.927.546-3.881 1.364-5.799 4.13-1.431 2.071-1.75 5.595-.109 8.128 1.588 2.452 3.786 3.627 5.714 4.27 1.872.626 4.649.709 6.949.147.96-.235 2.105-.65 2.472-.843.252-.134.288-.134.342-.421.096-.478.418-2.214.54-2.859.045-.248-.084-.294-.263-.111-.809.803-2.113 1.643-3.433 2.16-1.696.668-3.953.986-6.069-.067-2.216-1.102-2.986-2.583-3.402-3.305-.699-1.209-1.234-4.11.368-6.658 1.048-1.661 2.325-2.296 3.42-2.769 1.438-.62 3.525-.732 5.192-.091 1.053.401 2.494 1.204 3.337 2.206.122.143.313.14.287-.127-.042-.385-.277-2.68-.277-2.68m26.199 7.334h-11.255v5.506c0 .662.131 2.013 1.513 2.527.142.05.131.191-.021.191h-5.923c-.151 0-.162-.142-.02-.191 1.383-.515 1.517-1.865 1.517-2.527V10.86c0-.659-.134-2.009-1.517-2.521-.142-.053-.131-.193.02-.193h5.923c.152 0 .163.141.021.193-1.382.512-1.513 1.861-1.513 2.521v4.287h11.255V10.86c0-.659-.131-2.009-1.513-2.521-.142-.053-.132-.193.021-.193h5.923c.155 0 .163.141.021.193-1.383.512-1.512 1.861-1.512 2.521v11.356c0 .662.129 2.013 1.512 2.527.142.05.134.191-.021.191h-5.923c-.153 0-.162-.142-.021-.191 1.382-.515 1.513-1.865 1.513-2.527V16.74m48.784 6.684v-12.54c0-.828.215-1.911 1.705-2.49.143-.054.125-.226-.029-.226h-6.165c-.156 0-.166.14-.023.191 1.385.511 1.516 1.863 1.516 2.524v11.355c0 .661-.131 2.049-1.516 2.559-.143.052-.133.192.023.192h10.192c.895 0 1.748.213 2.398.595.104.062.197.086.27-.092.168-.43 1.15-2.887 1.313-3.332.064-.171-.039-.275-.205-.131-.162.142-1.576 1.396-3.654 1.396-2.081.002-5.825-.001-5.825-.001m60.109-14.946c.32-.143.492-.25.527.157.047.6.268 3.386.281 3.645.02.271-.07.3-.25.123-.432-.414-1.895-1.978-4.092-2.574-1.619-.44-2.963-.341-3.916-.1-1.152.295-1.826.878-2.227 1.445-.625.88-.488 2.014.16 2.68.707.732 2.139.978 3.51 1.187 1.291.199 3.756.526 4.982.966 1.051.381 2.006 1.156 2.592 2.008.807 1.176.77 3.24-.137 4.481-.998 1.363-2.248 2.114-3.693 2.507-2.043.551-4.234.432-6.238-.125-1.766-.491-3.209-.845-4.33-.213-.234.13-.299.1-.318-.2-.021-.321-.221-3.488-.234-4.071-.004-.195.129-.151.201-.07.617.693 2.551 2.073 4.682 2.77 1.803.591 3.363.784 5.43.222.961-.262 1.701-1.018 1.949-1.445.367-.652.365-1.725-.162-2.324-.35-.4-.84-1.018-4.893-1.59-4.236-.6-5.408-1.637-6.215-2.865-.996-1.508-.844-3.227-.111-4.465.781-1.324 1.957-1.96 2.973-2.361 1.332-.526 3.367-.71 5.553-.327 2.183.379 3.005.958 3.976.539m17.689 1.426h-4.379c-.906 0-1.443-.014-2.502.539-.27.141-.293-.04-.166-.201.514-.656 1.594-2.021 2.117-2.712l.281-.023c.244.198.922.634 1.936.634h10.324c.904 0 2.021-.104 3.098-.465.133-.041.289-.014.145.182-.434.597-1.529 2.047-1.945 2.586-.148.189-.227.079-.316.022-.199-.119-.59-.562-1.936-.562h-3.719v12.359c0 .66.131 2.011 1.51 2.521.145.052.135.194-.016.194h-5.923c-.152 0-.164-.143-.021-.194 1.383-.511 1.512-1.861 1.512-2.521m24.225-11.352c0-.664.131-2.015 1.512-2.525.143-.049.133-.19-.021-.19h-5.923c-.15 0-.16.142-.021.19 1.383.511 1.514 1.861 1.514 2.525v11.355c0 .661-.131 2.012-1.514 2.524-.139.049-.129.19.021.19h5.923c.154 0 .164-.142.021-.19-1.381-.513-1.512-1.863-1.512-2.525M290.5 9.377c-.039-.243-.096-.275-.338-.404-.402-.22-1.92-.721-2.762-.883-1.963-.367-4.111-.416-6.166.177-1.928.546-3.889 1.364-5.803 4.13-1.432 2.071-1.75 5.595-.109 8.128 1.588 2.452 3.787 3.627 5.713 4.27 1.873.626 4.65.709 6.951.147.959-.235 2.102-.65 2.469-.843.252-.134.287-.134.344-.421.096-.478.416-2.214.537-2.859.047-.248-.082-.294-.26-.111-.809.803-2.111 1.643-3.434 2.16-1.695.668-3.951.986-6.066-.067-2.221-1.102-2.988-2.583-3.404-3.305-.693-1.209-1.232-4.11.367-6.658 1.047-1.661 2.328-2.296 3.418-2.769 1.441-.62 3.527-.732 5.195-.091 1.053.401 2.496 1.204 3.338 2.206.121.143.313.14.285-.127-.039-.385-.275-2.68-.275-2.68M136.77 25.295c.977 0 4.588-.072 7.244-2.312 2.556-2.157 3.144-4.623 3.144-6.328v-.122c0-1.704-.588-4.172-3.144-6.326-2.655-2.236-6.267-2.313-7.244-2.313h-.221c-.979 0-4.589.076-7.244 2.313-2.556 2.154-3.144 4.622-3.144 6.326v.122c0 1.705.588 4.171 3.144 6.328 2.654 2.239 6.264 2.312 7.244 2.312m49.957-17.146h3.008s8.098 14.058 8.563 14.863c.467.809 1.143 1.474 1.809 1.703.178.06.174.263-.023.263h-5.223c-.209 0-.18-.177-.031-.251.146-.074.879-.449.336-1.419-.344-.613-1.615-2.864-1.615-2.864h-10.693s-1.369 2.376-1.641 2.887c-.176.337-.254 1.051.279 1.385.152.093.174.256-.01.256h-3.84c-.176 0-.295-.159-.021-.272.324-.14.998-.437 1.904-1.979.904-1.542 7.078-12.341 7.322-12.881.238-.528.369-1.059-.184-1.552" fill="#fff"/><path d="M136.759 23.51c1.443 0 3.522-.565 4.992-2.107 1.466-1.542 1.958-3.376 1.958-4.747v-.122c0-1.367-.491-3.206-1.958-4.747-1.469-1.54-3.548-2.104-4.992-2.104h-.198c-1.443 0-3.522.564-4.993 2.104-1.466 1.541-1.958 3.38-1.958 4.747v.122c0 1.371.491 3.205 1.958 4.747 1.471 1.542 3.55 2.107 4.993 2.107m51.533-12.666l4.396 8.015h-8.976" fill="#e6000d"/></svg>`,
+        'default': `<svg viewBox="0 0 80 80" fill="#1a2332"><rect x="15" y="20" width="50" height="40" rx="4"/><circle cx="40" cy="40" r="10" fill="#c9a227"/></svg>`
+      };
+
+      container.innerHTML = `
+        <!-- Hero / Rookie Card -->
+        <section id="about" class="hero-section">
+          <div class="rookie-card-container card-container">
+            <div class="rookie-card card">
+              <div class="card-front">
+                <div class="card-header">
+                  <span class="position">Software Engineer</span>
+                  <span class="year">RC 2025</span>
+                </div>
+                <div class="card-image">
+                  ${renderCardVisual(d.meta.rookieCardImage, d.meta.rookieCardSvg, defaultRookieSvg)}
+                </div>
+                <div class="card-info">
+                  <div class="card-name">${d.meta.name.toUpperCase()}</div>
+                  <div class="card-title">${d.meta.tagline}</div>
+                  <div class="card-stats">
+                    <div class="stat">
+                      <div class="stat-value">USC</div>
+                      <div class="stat-label">Viterbi</div>
+                    </div>
+                    <div class="stat">
+                      <div class="stat-value">${d.education.gpa}</div>
+                      <div class="stat-label">GPA</div>
+                    </div>
+                    <div class="stat">
+                      <div class="stat-value">${d.education.endYear}</div>
+                      <div class="stat-label">Class</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-back">
+                <div class="card-back-pattern"></div>
+                <h3>About Me</h3>
+                <p>${d.about.short}</p>
+                <p>Founded India's largest student-run hackathon (800+ teams, 50+ schools). Built production AI systems leveraging vector databases and LLMs.</p>
+                <p>Seeking ${d.meta.availability} internships in software engineering and sports analytics.</p>
+                <div class="links">
+                  <a href="mailto:${d.meta.email}">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    Email
+                  </a>
+                  <a href="${d.meta.links.github}" target="_blank">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+                    GitHub
+                  </a>
+                  <a href="${d.meta.links.linkedin}" target="_blank">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    LinkedIn
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <p class="flip-hint">↻ Click cards to flip</p>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects-section">
+          <h2 class="section-title">The Collection</h2>
+          <div class="projects-grid">
+            ${d.projects.map(proj => `
+              <div class="project-card-container card-container">
+                <div class="project-card card">
+                  <div class="card-front">
+                    <div class="project-header">
+                      <span class="project-type">${proj.type}</span>
+                      <span class="project-rarity">${proj.rarity}</span>
+                    </div>
+                    <div class="card-image">
+                      ${renderCardVisual(
+                        proj.cardImage,
+                        proj.cardSvg,
+                        defaultProjectSvgs[proj.id] || defaultProjectSvgs['default'],
+                        proj.typeArt
+                      )}
+
+                    </div>
+                    <div class="card-info">
+                      <div class="project-name">${proj.name}</div>
+                      <div class="project-desc">${proj.shortDesc}</div>
+                    </div>
+                  </div>
+                  <div class="card-back">
+                    <div class="card-back-pattern"></div>
+                    <h4>${proj.name}</h4>
+                    <p>${proj.description}</p>
+                    <div class="tech-stack">
+                      ${proj.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                    </div>
+                    <div class="metrics">
+                      <div class="metric">
+                        <div class="metric-value">${proj.metrics.value}</div>
+                        <div class="metric-label">${proj.metrics.label}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="skills-section">
+          <h2 class="section-title">Skill Deck</h2>
+          <div class="skills-card-container card-container">
+            <div class="skills-card card">
+              <div class="card-front">
+                <h3>Core Attributes</h3>
+                <div class="skill-bars">
+                  ${d.skills.ratings.map(skill => `
+                    <div class="skill-bar">
+                      <span class="skill-name">${skill.name}</span>
+                      <div class="bar-container">
+                        <div class="bar-fill" style="width: 100%"></div>
+                      </div>
+                      <span class="skill-value">🏆</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+              <div class="card-back">
+                <div class="card-back-pattern"></div>
+                <h3>Tech Stack</h3>
+                <div class="skills-grid">
+                  ${[...d.skills.languages, ...d.skills.frameworks.slice(0, 4), ...d.skills.databases, ...d.skills.tools, ...d.skills.other].map(skill => `
+                    <div class="skill-item">
+                      <span>${skill}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="experience-section">
+          <h2 class="section-title">Career Timeline</h2>
+          <div class="experience-grid">
+            ${d.experience.map(exp => `
+              <div class="experience-card-container card-container">
+                <div class="experience-card card">
+                  <div class="card-front">
+                    <div class="exp-header">
+                      <span class="exp-year">${exp.year}</span>
+                      <span class="exp-type">${exp.type}</span>
+                    </div>
+                    <div class="exp-company">${exp.company}</div>
+                    <div class="exp-role">${exp.role}</div>
+                    <div class="exp-icon">
+                      ${renderCardVisual(
+                        exp.cardImage,
+                        exp.cardSvg,
+                        defaultExpSvgs[exp.id] || defaultExpSvgs['default'],
+                        exp.typeArt
+                      )}
+
+                    </div>
+                  </div>
+                  <div class="card-back">
+                    <div class="card-back-pattern"></div>
+                    <h4>Key Achievements</h4>
+                    <ul>
+                      ${exp.bullets.map(b => `<li>${b}</li>`).join('')}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+          <h2 class="section-title">Draft Me</h2>
+          <div class="contact-card-container card-container">
+            <div class="contact-card card">
+              <div class="card-front">
+                <span class="legendary-badge">★ LEGENDARY ★</span>
+                <h3>Get In Touch</h3>
+                <p>Available for ${d.meta.availability}</p>
+              </div>
+              <div class="card-back">
+                <div class="card-back-pattern"></div>
+                <a href="mailto:${d.meta.email}">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                  ${d.meta.email}
+                </a>
+                <a href="${d.meta.links.github}" target="_blank">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.385-1.335-1.755-1.335-1.755-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+                  GitHub
+                </a>
+                <a href="${d.meta.links.linkedin}" target="_blank">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  LinkedIn
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <p>© ${new Date().getFullYear()} ${d.meta.name} • Built with passion for code and sports</p>
+        </footer>
+      `;
+
+      // Initialize card flipping
+      document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', () => card.classList.toggle('flipped'));
+      });
+    }
+
+    render();
+  </script>
+</body>
+</html>

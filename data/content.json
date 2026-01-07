@@ -1,0 +1,172 @@
+{
+  "meta": {
+    "name": "Krish Shah",
+    "tagline": "Software Engineer • Sports Analytics",
+    "location": "Los Angeles, CA",
+    "email": "ktshah@usc.edu",
+    "phone": "(213) 994-2276",
+    "links": {
+      "linkedin": "https://www.linkedin.com/in/krish-shah-computer-science/",
+      "github": "https://github.com/krish-shah"
+    },
+    "photo": "assets/profile.jpg",
+    "availability": "Winter 2026"
+  },
+  "about": {
+    "short": "CS student at USC Viterbi with expertise in AI/ML systems, RAG architectures, and generative AI applications. Dean's List Fall '24 & Spring '25.",
+    "paragraphs": [
+      "I'm a Computer Science student at USC's Viterbi School of Engineering, passionate about building intelligent systems and applying data-driven approaches to challenging problems.",
+      "My work spans AI-powered code generation systems, full-stack web applications, and sports analytics. I've built production RAG pipelines, organized hackathons, and created software used by thousands of engineering students.",
+      "Currently seeking opportunities where I can apply my technical skills to impactful problems in software engineering or sports analytics."
+    ]
+  },
+  "education": {
+    "school": "University of Southern California",
+    "college": "Viterbi School of Engineering",
+    "degree": "B.S. Computer Science",
+    "minor": "Mathematical Data Analytics",
+    "gpa": "3.84",
+    "startYear": "2024",
+    "endYear": "2028",
+    "honors": [
+      "Dean's List – Fall 2024, Spring 2025"
+    ],
+    "coursework": [
+      "Data Structures & Algorithms",
+      "Discrete Mathematics",
+      "Probability Theory",
+      "Linear Algebra"
+    ]
+  },
+  "experience": [
+    {
+      "id": "makerspace",
+      "role": "Student Worker",
+      "company": "Baum Family Maker Space",
+      "location": "Los Angeles, CA",
+      "startDate": "Dec 2024",
+      "endDate": "Present",
+      "current": true,
+      "bullets": [
+        "Developed inventory management software now used by 2,700+ Viterbi engineering students",
+        "Manage 3D printing operations and equipment maintenance",
+        "Provide technical support and training for students on fabrication tools"
+      ],
+      "tags": ["Current", "Software", "Leadership"]
+    },
+    {
+      "id": "whiteklay",
+      "role": "Software Engineering Intern",
+      "company": "Whiteklay Technologies",
+      "location": "Mumbai, India",
+      "startDate": "May 2025",
+      "endDate": "Aug 2025",
+      "current": false,
+      "bullets": [
+        "Built AI-powered code generation system using RAG architecture with ChromaDB vector databases",
+        "Developed ingestion pipeline for API documentation and PDF processing",
+        "Implemented Docker-based code execution environment with composition viability checking",
+        "Created ~6,000 lines of production Python code supporting OpenAI and Ollama models"
+      ],
+      "tags": ["AI/ML", "Python", "RAG"]
+    },
+    {
+      "id": "tridenthacks",
+      "role": "Founder & Lead Organizer",
+      "company": "Trident Hacks",
+      "location": "Dubai, UAE",
+      "startDate": "Sep 2020",
+      "endDate": "May 2024",
+      "current": false,
+      "bullets": [
+        "Founded and organized annual hackathon attracting 150+ participants",
+        "Secured $5,000+ in sponsorships from tech companies",
+        "Managed team of 15 volunteers and coordinated with school administration",
+        "Grew event from inception to recognized annual institution"
+      ],
+      "tags": ["Leadership", "Events", "Founder"]
+    },
+    {
+      "id": "viterbi-education",
+      "role": "Computer Science Studies",
+      "company": "USC Viterbi School of Engineering",
+      "location": "Los Angeles, CA",
+      "startDate": "Aug 2024",
+      "endDate": "Present",
+      "current": true,
+      "bullets": [
+        "Pursuing B.S. Computer Science with Minor in Mathematical Data Analytics",
+        "Dean's List recipient for academic excellence",
+        "Active in engineering community and maker space"
+      ],
+      "tags": ["Education", "CS", "Analytics"]
+    }
+  ],
+  "projects": [
+    {
+      "id": "rag-code-gen",
+      "name": "RAG Code Generator",
+      "shortDesc": "AI-powered code generation with vector search",
+      "description": "Production-grade code generation system using retrieval-augmented generation. Features ChromaDB vector databases with three specialized collections, an ingestion pipeline for API docs and PDFs, and composition viability checking before execution.",
+      "tech": ["Python", "ChromaDB", "Docker", "OpenAI", "Ollama"],
+      "type": "AI/ML",
+      "featured": true,
+      "metrics": {
+        "label": "Lines of Code",
+        "value": "~6K"
+      },
+      "links": {}
+    },
+    {
+      "id": "trashure-cove",
+      "name": "Trashure Cove",
+      "shortDesc": "Gamified recycling education platform",
+      "description": "Hackathon-winning gamified platform that educates users about recycling through interactive challenges and rewards. Built in 24 hours at a competitive hackathon.",
+      "tech": ["Python", "Flask", "React", "jQuery"],
+      "type": "Hackathon",
+      "featured": true,
+      "award": "Winner",
+      "metrics": {
+        "label": "Build Time",
+        "value": "24hr"
+      },
+      "links": {}
+    },
+    {
+      "id": "qgo",
+      "name": "QGo",
+      "shortDesc": "Local grocery delivery platform",
+      "description": "Winner at TOI WorldCodingBee. A grocery and local item delivery platform enabling users to order from local stores in India with doorstep delivery.",
+      "tech": ["Python", "Flask", "PostgreSQL", "Svelte", "Tailwind"],
+      "type": "Full Stack",
+      "featured": true,
+      "award": "1st Place",
+      "metrics": {
+        "label": "Competition",
+        "value": "WorldCodingBee"
+      },
+      "links": {}
+    }
+  ],
+  "skills": {
+    "languages": ["Python", "JavaScript", "Java", "C++"],
+    "frameworks": ["Flask", "Svelte", "React", "Tailwind CSS"],
+    "databases": ["PostgreSQL", "ChromaDB", "Vector Databases"],
+    "tools": ["Git", "Docker", "LLMs", "RAG"],
+    "other": ["Event Management", "Team Leadership", "Public Speaking"],
+    "ratings": [
+      { "name": "Python", "level": 92 },
+      { "name": "JavaScript", "level": 85 },
+      { "name": "AI/ML & LLMs", "level": 88 },
+      { "name": "Flask / Backend", "level": 86 },
+      { "name": "Java / C++", "level": 78 },
+      { "name": "Leadership", "level": 90 }
+    ]
+  },
+  "certifications": [
+    "Back End Development and APIs – freeCodeCamp",
+    "Scientific Computing with Python – freeCodeCamp",
+    "Responsive Web Design – freeCodeCamp",
+    "JavaScript Algorithms and Data Structures – freeCodeCamp"
+  ]
+}
