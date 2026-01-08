@@ -471,6 +471,40 @@
         text-align: center;
       }
     }
+    /* Prompt Suggestions Bar */
+  .prompt-bar {
+    position: sticky;
+    bottom: 110px; /* sits above input area */
+    z-index: 20;
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .prompt-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .prompt-chip {
+    white-space: nowrap;
+    padding: 0.6rem 1rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .prompt-chip:hover {
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+    background: rgba(16, 185, 129, 0.08);
+  }
+
   </style>
 </head>
 <body>
@@ -510,13 +544,20 @@
         </div>
         <h2>Hey there! 👋</h2>
         <p>I'm an AI assistant that can answer questions about Krish's background, experience, projects, and interests.</p>
-        <div class="suggestions">
+        <!-- <div class="suggestions">
           <button class="suggestion" onclick="askSuggestion(this)">What's Krish studying?</button>
           <button class="suggestion" onclick="askSuggestion(this)">Tell me about his projects</button>
           <button class="suggestion" onclick="askSuggestion(this)">What are his technical skills?</button>
           <button class="suggestion" onclick="askSuggestion(this)">What's he looking for?</button>
-        </div>
+        </div> -->
       </div>
+    </div>
+    <!-- Persistent Suggestions Bar -->
+    <div class="prompt-bar" id="prompt-bar">
+      <button class="prompt-chip" onclick="askSuggestion(this)">What's Krish studying?</button>
+      <button class="prompt-chip" onclick="askSuggestion(this)">Tell me about his projects</button>
+      <button class="prompt-chip" onclick="askSuggestion(this)">What are his technical skills?</button>
+      <button class="prompt-chip" onclick="askSuggestion(this)">What is he looking for?</button>
     </div>
 
     <!-- Input Area -->
@@ -717,7 +758,7 @@
 
       isLoading = false;
       sendBtn.disabled = false;
-      input.focus();
+      // input.focus();
     }
   </script>
 </body>
