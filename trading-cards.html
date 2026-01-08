@@ -60,7 +60,7 @@
     }
 
     .type-main {
-      font-size: 5rem;
+      font-size: clamp(4rem, 4vw, 5rem);
       color: rgba(26, 35, 50, 0.15);
       line-height: 1;
     }
@@ -105,7 +105,7 @@
     }
 
     .experience-type-art .type-main {
-      font-size: 4rem;
+      font-size: 3rem;
       color: rgba(26, 35, 50, 0.18);
     }
 
@@ -732,9 +732,22 @@
     }
 
     @media (max-width: 768px) {
-      .nav { gap: 1rem; }
+      .nav { gap: 1rem; flex-direction:column; }
       .rookie-card-container { width: 320px; height: 480px; }
-      .skills-grid { grid-template-columns: repeat(3, 1fr); }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); gap: 0.35rem; }
+      .skill-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.1rem;
+        background: var(--card-face);
+        border-radius: 8px;
+        border: 1px solid var(--accent-gold);
+      }
+      ul li{
+        line-height: 1.4 ;
+      }
     }
   </style>
 </head>
@@ -915,7 +928,6 @@
               <div class="card-front">
                 <div class="card-header">
                   <span class="position">Software Engineer</span>
-                  <span class="year">RC 2025</span>
                 </div>
                 <div class="card-image">
                   ${renderCardVisual(d.meta.rookieCardImage, d.meta.rookieCardSvg, defaultRookieSvg)}
@@ -987,8 +999,7 @@
 
                     </div>
                     <div class="card-info">
-                      <div class="project-name">${proj.name}</div>
-                      <div class="project-desc">${proj.shortDesc}</div>
+                      <div class="project-name">${proj.shortDesc}</div>
                     </div>
                   </div>
                   <div class="card-back">
@@ -998,12 +1009,7 @@
                     <div class="tech-stack">
                       ${proj.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
                     </div>
-                    <div class="metrics">
-                      <div class="metric">
-                        <div class="metric-value">${proj.metrics.value}</div>
-                        <div class="metric-label">${proj.metrics.label}</div>
-                      </div>
-                    </div>
+                    
                   </div>
                 </div>
               </div>
